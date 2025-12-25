@@ -3,26 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevDocs Pro - The Ultimate Coding Wiki</title>
+    <title>DevDocs Elite | Master the Code</title>
     
     <meta name="google-adsense-account" content="ca-pub-6787196977801417">
-
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6787196977801417"
      crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
     <style>
-        /* --- VARIABLES & RESET --- */
+        /* --- 1. DESIGN SYSTEM --- */
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1e40af;
-            --bg-color: #f8fafc;
-            --sidebar-bg: #0f172a;
-            --text-main: #334155;
-            --text-light: #94a3b8;
-            --code-bg: #1e293b;
-            --card-hover: translateY(-4px);
+            --primary: #2563eb;      /* Vibrant Blue */
+            --dark: #0f172a;         /* Deep Navy */
+            --light: #f8fafc;        /* Off White */
+            --text-main: #334155;    /* Slate */
+            --text-bold: #1e293b;    /* Darker Slate */
+            --ad-bg: #fff7ed;        /* Light Orange Tint for Ad Slots */
+            --ad-border: #fdba74;    /* Orange Border */
         }
 
         * { box-sizing: border-box; }
@@ -32,198 +30,446 @@
             margin: 0;
             display: flex;
             height: 100vh;
-            background-color: var(--bg-color);
+            background-color: var(--light);
             color: var(--text-main);
-            overflow: hidden;
+            overflow: hidden; 
         }
 
-        /* --- UI COMPONENTS --- */
+        /* --- 2. SIDEBAR (Navigation) --- */
         .sidebar {
-            width: 280px;
-            background-color: var(--sidebar-bg);
-            color: var(--text-light);
+            width: 340px; 
+            background-color: var(--dark);
+            color: #cbd5e1;
             display: flex;
             flex-direction: column;
-            border-right: 1px solid #334155;
+            border-right: 1px solid #1e293b;
             flex-shrink: 0;
+            z-index: 10;
         }
 
         .brand {
-            padding: 30px;
-            font-size: 1.5rem;
-            font-weight: 800;
+            padding: 40px 30px;
+            font-size: 1.8rem;
+            font-weight: 900;
             color: white;
-            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+            letter-spacing: -1px;
             border-bottom: 1px solid #1e293b;
         }
         .brand span { color: var(--primary); }
 
-        .lang-list { flex: 1; overflow-y: auto; padding: 15px; }
-        
+        .lang-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
         .lang-btn {
             width: 100%;
             background: transparent;
-            border: none;
-            color: #cbd5e1;
-            padding: 14px 20px;
+            border: 1px solid transparent;
+            color: #94a3b8;
+            padding: 18px 25px;
             text-align: left;
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.2s;
-            font-weight: 500;
-            margin-bottom: 5px;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            margin-bottom: 8px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 15px;
         }
-        .lang-btn:hover { background-color: #1e293b; color: white; padding-left: 25px; }
-        .lang-btn.active { background-color: var(--primary); color: white; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4); }
 
-        .revenue-btn {
-            width: 90%;
-            margin: 5%;
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        .lang-btn:hover {
+            background-color: rgba(255,255,255,0.05);
             color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
         }
 
-        /* --- MAIN AREA --- */
+        .lang-btn.active {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.5);
+            transform: translateX(5px);
+        }
+
+        /* Sidebar Ad Slot */
+        .sidebar-ad {
+            margin: 20px;
+            padding: 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed #475569;
+            overflow: hidden;
+        }
+
+        /* --- 3. MAIN CONTENT --- */
         .main-content {
             flex: 1;
-            padding: 40px 60px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Top Header Ad (Sticky) */
+        .top-ad-bar {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 120px;
+            z-index: 5;
+            overflow: hidden;
+        }
+
+        .scroll-area {
+            flex: 1;
+            padding: 50px 80px;
             overflow-y: auto;
             scroll-behavior: smooth;
         }
 
-        /* Auto Ad Placeholder (Google will fill this automatically if Auto Ads are on) */
-        .ad-banner-top {
-            width: 100%;
-            min-height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 40px;
-            border-radius: 8px;
-            background: #e2e8f0;
-            color: #64748b;
-            font-size: 0.8rem;
-        }
+        /* --- 4. TYPOGRAPHY & LAYOUT --- */
+        h1 { font-size: 3.5rem; color: var(--text-bold); margin: 0 0 20px 0; letter-spacing: -1.5px; line-height: 1.1; }
+        h3 { font-size: 1.5rem; color: var(--text-bold); margin: 40px 0 20px 0; border-left: 5px solid var(--primary); padding-left: 15px; }
+        p { font-size: 1.25rem; line-height: 1.8; color: var(--text-main); max-width: 900px; margin-bottom: 30px; }
 
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 50px 20px;
+        /* Meta Data Grid */
+        .meta-box {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 40px;
+            padding: 25px;
             background: white;
             border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
             border: 1px solid #e2e8f0;
+            width: fit-content;
         }
-        .hero h1 { font-size: 2.5rem; color: #0f172a; margin-bottom: 15px; }
-        .hero p { font-size: 1.1rem; color: #64748b; margin-bottom: 30px; }
-        .hero-stats { display: flex; justify-content: center; gap: 30px; }
-        .stat-card { background: #f8fafc; padding: 20px; border-radius: 10px; min-width: 150px; border: 1px solid #e2e8f0; }
-        .stat-num { display: block; font-size: 2rem; font-weight: 800; color: var(--primary); }
+        .meta-item h4 { margin: 0; font-size: 0.85rem; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
+        .meta-item span { display: block; font-size: 1.4rem; font-weight: 700; color: var(--dark); margin-top: 5px; }
 
-        /* Detail View */
-        .tabs { display: flex; gap: 20px; margin-bottom: 30px; border-bottom: 2px solid #e2e8f0; }
-        .tab-btn { background: none; border: none; padding: 15px 5px; font-size: 1rem; color: #64748b; cursor: pointer; font-weight: 600; position: relative; }
-        .tab-btn.active { color: var(--primary); }
-        .tab-btn.active::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 3px; background: var(--primary); }
+        /* Code Block */
+        pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 30px;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+        }
 
-        .content-section { display: none; animation: fadeIn 0.4s ease; }
-        .content-section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* --- 5. LIBRARY GRID (Cards) --- */
+        .lib-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 30px;
+            padding-bottom: 50px;
+        }
 
-        /* Libraries */
-        .lib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .lib-card { background: white; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px; transition: all 0.2s; display: flex; flex-direction: column; }
-        .lib-card:hover { transform: var(--card-hover); border-color: var(--primary); }
-        .lib-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
-        .lib-name { font-weight: 800; color: #0f172a; }
-        .lib-tag { background: #eff6ff; color: var(--primary); padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
-        .install-box { background: #0f172a; padding: 10px; border-radius: 6px; font-family: monospace; font-size: 0.8rem; color: #22d3ee; margin-top: auto; }
+        .lib-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .lib-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        .lib-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .lib-name { font-size: 1.4rem; font-weight: 800; color: var(--dark); }
+        .lib-tag { background: #eff6ff; color: var(--primary); padding: 6px 12px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; }
+        .lib-desc { font-size: 1.05rem; color: #64748b; margin-bottom: 25px; flex: 1; }
         
-        pre { background: var(--code-bg); color: #e2e8f0; padding: 25px; border-radius: 12px; overflow-x: auto; }
-        .ad-in-content { margin: 30px 0; padding: 20px; background: white; border: 1px solid #e2e8f0; text-align: center; }
+        .cmd-box {
+            background: var(--dark);
+            color: #22d3ee;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+        }
+        .cmd-box::before { content: '$ '; color: #64748b; margin-right: 10px; }
 
+        /* --- 6. NATIVE AD CARD --- */
+        .ad-card {
+            grid-column: span 1;
+            background-color: var(--ad-bg);
+            border: 2px dashed var(--ad-border);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            text-align: center;
+            min-height: 300px;
+            overflow: hidden;
+        }
+        .ad-label { background: var(--ad-border); color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; margin-bottom: 10px; }
+
+        /* Tabs */
+        .tabs { margin: 30px 0; border-bottom: 2px solid #e2e8f0; display: flex; gap: 30px; }
+        .tab-btn { background: none; border: none; padding: 15px 0; font-size: 1.2rem; font-weight: 600; color: #94a3b8; cursor: pointer; position: relative; }
+        .tab-btn.active { color: var(--primary); }
+        .tab-btn.active::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 4px; background: var(--primary); border-radius: 4px; }
+
+        /* Welcome Screen */
+        .welcome-hero {
+            text-align: center;
+            margin-top: 50px;
+            padding: 60px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
     </style>
 </head>
 <body>
 
     <nav class="sidebar">
-        <div class="brand">DevDocs<span>Pro</span></div>
-        <div class="lang-list" id="lang-list"></div>
-        <button class="revenue-btn" onclick="alert('Fetching Market Data...')">💰 Developer Salaries</button>
+        <div class="brand">DevDocs<span>Elite</span></div>
+        <div class="lang-list" id="lang-list">
+            </div>
+        
+        <div class="sidebar-ad">
+            <span style="font-size:0.8rem; color:#64748b; margin-bottom:5px;">Sponsored</span>
+            
+            <ins class="adsbygoogle"
+                 style="display:block; width:100%"
+                 data-ad-client="ca-pub-6787196977801417"
+                 data-ad-slot="9840451052"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
     </nav>
 
-    <main class="main-content">
+    <div class="main-content">
         
-        <div class="ad-banner-top">
-            <span style="color:#94a3b8">Advertisement Space</span>
+        <div class="top-ad-bar">
+            <ins class="adsbygoogle"
+                 style="display:block; width:100%; height:90px;"
+                 data-ad-client="ca-pub-6787196977801417"
+                 data-ad-slot="9840451052"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
 
-        <div id="welcome-screen">
-            <div class="hero">
-                <h1>The Developer's Knowledge Base</h1>
-                <p>Select a technology from the sidebar to view documentation and top libraries.</p>
-                <div class="hero-stats">
-                    <div class="stat-card"><span class="stat-num">6</span> Languages</div>
-                    <div class="stat-card"><span class="stat-num">120+</span> Libraries</div>
+        <div class="scroll-area">
+            
+            <div id="welcome-screen" class="welcome-hero">
+                <i class="fa-solid fa-code" style="font-size: 5rem; color: var(--primary); margin-bottom: 30px;"></i>
+                <h1>Welcome to DevDocs Elite</h1>
+                <p style="margin: 0 auto;">Select a popular language from the sidebar to view detailed documentation, syntax guides, and the top 20 industry-standard libraries.</p>
+            </div>
+
+            <div id="detail-view" style="display:none;">
+                <h1 id="lang-title">Language Title</h1>
+                
+                <div class="meta-box">
+                    <div class="meta-item"><h4>Creator</h4><span id="meta-creator">-</span></div>
+                    <div class="meta-item"><h4>Year</h4><span id="meta-year">-</span></div>
+                    <div class="meta-item"><h4>Type</h4><span id="meta-type">-</span></div>
+                </div>
+
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('about')">Overview</button>
+                    <button class="tab-btn" onclick="switchTab('syntax')">Syntax</button>
+                    <button class="tab-btn" onclick="switchTab('libs')">Top 20 Libraries</button>
+                </div>
+
+                <div id="about" class="section">
+                    <p id="desc-text">Description goes here...</p>
+                </div>
+
+                <div id="syntax" class="section" style="display:none;">
+                    <h3>Basic Entry Point</h3>
+                    <pre id="code-block"></pre>
+                </div>
+
+                <div id="libs" class="section" style="display:none;">
+                    <h3>Essential Ecosystem</h3>
+                    <div class="lib-grid" id="lib-grid">
+                        </div>
                 </div>
             </div>
+
         </div>
-
-        <div id="detail-view" style="display:none;">
-            <h1 id="lang-title" style="font-size: 2.5rem; color:#0f172a; margin-bottom:10px;">Language</h1>
-            
-            <div class="tabs">
-                <button class="tab-btn active" onclick="switchTab('about')">Overview</button>
-                <button class="tab-btn" onclick="switchTab('syntax')">Syntax</button>
-                <button class="tab-btn" onclick="switchTab('packages')">Top 20 Libraries</button>
-            </div>
-
-            <div id="about" class="content-section"></div>
-            
-            <div id="syntax" class="content-section">
-                <h3>Entry Point</h3>
-                <pre id="code-block">Loading...</pre>
-            </div>
-
-            <div id="packages" class="content-section">
-                <div class="ad-in-content">
-                    <span style="color:#94a3b8; font-size:0.8rem;">Sponsored Content</span>
-                </div>
-                <div class="lib-grid" id="lib-list"></div>
-            </div>
-        </div>
-    </main>
+    </div>
 
     <script>
-        // --- DATA SOURCE (Same 20 libraries logic) ---
+        // --- DATA: TOP 5 POPULAR LANGUAGES ONLY ---
         const data = {
-            python: { name: "Python", desc: "Python is a high-level, general-purpose programming language.", code: "print('Hello World')", libs: Array(20).fill({n:"NumPy", t:"Data", d:"Scientific computing package.", c:"pip install numpy"}).map((l,i)=>({...l, n: i===0?"NumPy":i===1?"Pandas":i===2?"Django":`Lib-${i+1}`})) },
-            javascript: { name: "JavaScript", desc: "The language of the Web.", code: "console.log('Hello')", libs: Array(20).fill({n:"React", t:"UI", d:"UI Library.", c:"npm install react"}) },
-            java: { name: "Java", desc: "Object-oriented, class-based.", code: "System.out.println('Hi');", libs: Array(20).fill({n:"Spring", t:"Fw", d:"App Framework.", c:"mvn install spring"}) },
-            cpp: { name: "C++", desc: "High performance language.", code: "cout << 'Hi';", libs: Array(20).fill({n:"Boost", t:"Lib", d:"C++ Libraries.", c:"apt install boost"}) },
-            go: { name: "Go", desc: "Statically typed, compiled.", code: "fmt.Println('Hi')", libs: Array(20).fill({n:"Gin", t:"Web", d:"Web Framework.", c:"go get gin"}) },
-            php: { name: "PHP", desc: "Server-side scripting.", code: "echo 'Hi';", libs: Array(20).fill({n:"Laravel", t:"Fw", d:"Web Framework.", c:"composer require laravel"}) }
+            python: {
+                name: "Python", creator: "Guido van Rossum", year: "1991", type: "Interpreted",
+                desc: "Python is currently the most popular programming language in the world. It is the gold standard for Artificial Intelligence, Machine Learning, and Data Science.",
+                code: "def main():\n    print(\"Hello, World!\")\n\nif __name__ == \"__main__\":\n    main()",
+                libs: [
+                    {n:"NumPy", t:"Data", d:"Scientific computing with Python.", c:"pip install numpy"},
+                    {n:"Pandas", t:"Data", d:"Data analysis and manipulation.", c:"pip install pandas"},
+                    {n:"Django", t:"Web", d:"High-level Python Web framework.", c:"pip install django"},
+                    {n:"Flask", t:"Web", d:"Lightweight web app framework.", c:"pip install flask"},
+                    {n:"TensorFlow", t:"AI", d:"Machine learning platform.", c:"pip install tensorflow"},
+                    {n:"PyTorch", t:"AI", d:"Deep learning framework.", c:"pip install torch"},
+                    {n:"Requests", t:"HTTP", d:"Simple HTTP library.", c:"pip install requests"},
+                    {n:"Scikit-learn", t:"ML", d:"Predictive data analysis.", c:"pip install scikit-learn"},
+                    {n:"FastAPI", t:"API", d:"Modern, fast web framework.", c:"pip install fastapi"},
+                    {n:"Matplotlib", t:"Viz", d:"Comprehensive visualization library.", c:"pip install matplotlib"},
+                    {n:"Seaborn", t:"Viz", d:"Statistical data visualization.", c:"pip install seaborn"},
+                    {n:"SQLAlchemy", t:"DB", d:"SQL Toolkit and ORM.", c:"pip install sqlalchemy"},
+                    {n:"BeautifulSoup", t:"Scrape", d:"HTML/XML parser.", c:"pip install beautifulsoup4"},
+                    {n:"Celery", t:"Task", d:"Distributed task queue.", c:"pip install celery"},
+                    {n:"Pytest", t:"Test", d:"Testing framework.", c:"pip install pytest"},
+                    {n:"Pillow", t:"Img", d:"Python Imaging Library.", c:"pip install Pillow"},
+                    {n:"PyGame", t:"Game", d:"Video game modules.", c:"pip install pygame"},
+                    {n:"Scrapy", t:"Scrape", d:"Extraction framework.", c:"pip install scrapy"},
+                    {n:"Keras", t:"AI", d:"Deep Learning for humans.", c:"pip install keras"},
+                    {n:"NLTK", t:"NLP", d:"Natural Language Toolkit.", c:"pip install nltk"}
+                ]
+            },
+            javascript: {
+                name: "JavaScript", creator: "Brendan Eich", year: "1995", type: "JIT Compiled",
+                desc: "JavaScript is the programming language of the Web. It enables interactive web pages and is an essential part of web applications.",
+                code: "console.log(\"Hello World\");",
+                libs: [
+                    {n:"React", t:"UI", d:"Building user interfaces.", c:"npm install react"},
+                    {n:"Next.js", t:"Fullstack", d:"React Framework for production.", c:"npx create-next-app"},
+                    {n:"Vue.js", t:"UI", d:"Progressive Framework.", c:"npm install vue"},
+                    {n:"Angular", t:"UI", d:"Platform for web apps.", c:"npm install @angular/core"},
+                    {n:"Node.js", t:"Runtime", d:"JS runtime built on Chrome's V8.", c:"nvm install node"},
+                    {n:"Express", t:"Backend", d:"Minimalist web framework.", c:"npm install express"},
+                    {n:"Lodash", t:"Util", d:"Utility library.", c:"npm install lodash"},
+                    {n:"Axios", t:"HTTP", d:"Promise based HTTP client.", c:"npm install axios"},
+                    {n:"TypeScript", t:"Lang", d:"JS with syntax for types.", c:"npm install typescript"},
+                    {n:"Redux", t:"State", d:"State container.", c:"npm install redux"},
+                    {n:"Three.js", t:"3D", d:"3D library.", c:"npm install three"},
+                    {n:"Moment.js", t:"Date", d:"Parse and display dates.", c:"npm install moment"},
+                    {n:"D3.js", t:"Viz", d:"Data-Driven Documents.", c:"npm install d3"},
+                    {n:"Socket.io", t:"Realtime", d:"Bidirectional communication.", c:"npm install socket.io"},
+                    {n:"Jest", t:"Test", d:"JS Testing.", c:"npm install jest"},
+                    {n:"Tailwind", t:"CSS", d:"Utility-first CSS.", c:"npm install tailwindcss"},
+                    {n:"Puppeteer", t:"Auto", d:"Headless Chrome API.", c:"npm install puppeteer"},
+                    {n:"Webpack", t:"Build", d:"Module bundler.", c:"npm install webpack"},
+                    {n:"Chart.js", t:"Viz", d:"Simple charting.", c:"npm install chart.js"},
+                    {n:"Cypress", t:"Test", d:"Reliable testing.", c:"npm install cypress"}
+                ]
+            },
+            java: {
+                name: "Java", creator: "James Gosling", year: "1995", type: "Compiled (JVM)",
+                desc: "Java is a class-based, object-oriented programming language designed to have as few implementation dependencies as possible.",
+                code: "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello World\");\n    }\n}",
+                libs: [
+                    {n:"Spring Boot", t:"Framework", d:"Stand-alone applications.", c:"gradle bootRun"},
+                    {n:"Hibernate", t:"ORM", d:"Object/Relational Mapping.", c:"mvn install hibernate-core"},
+                    {n:"Apache Kafka", t:"Data", d:"Event streaming platform.", c:"mvn install kafka-clients"},
+                    {n:"JUnit", t:"Test", d:"Testing framework.", c:"mvn install junit"},
+                    {n:"Log4j2", t:"Log", d:"Logging library.", c:"mvn install log4j-core"},
+                    {n:"Jackson", t:"JSON", d:"JSON processor.", c:"mvn install jackson-databind"},
+                    {n:"Selenium", t:"Auto", d:"Web app testing.", c:"mvn install selenium-java"},
+                    {n:"Lombok", t:"Util", d:"Annotations library.", c:"mvn install lombok"},
+                    {n:"Maven", t:"Build", d:"Project management.", c:"apt install maven"},
+                    {n:"Gradle", t:"Build", d:"Build automation.", c:"apt install gradle"},
+                    {n:"Guava", t:"Util", d:"Core libraries.", c:"mvn install guava"},
+                    {n:"Mockito", t:"Test", d:"Mocking framework.", c:"mvn install mockito-core"},
+                    {n:"Thymeleaf", t:"Web", d:"Template engine.", c:"mvn install thymeleaf"},
+                    {n:"Netty", t:"Net", d:"Network app framework.", c:"mvn install netty-all"},
+                    {n:"Spark", t:"BigData", d:"Analytics engine.", c:"mvn install spark-core"},
+                    {n:"Hadoop", t:"BigData", d:"Distributed processing.", c:"mvn install hadoop-common"},
+                    {n:"Elasticsearch", t:"Search", d:"Search engine.", c:"mvn install elasticsearch"},
+                    {n:"Quartz", t:"Job", d:"Job scheduling.", c:"mvn install quartz"},
+                    {n:"Gson", t:"JSON", d:"Java to JSON.", c:"mvn install gson"},
+                    {n:"Apache Commons", t:"Util", d:"Reusable components.", c:"mvn install commons-lang3"}
+                ]
+            },
+            cpp: {
+                name: "C++", creator: "Bjarne Stroustrup", year: "1985", type: "Compiled",
+                desc: "C++ is a cross-platform language used to create high-performance applications like Games and OS.",
+                code: "#include <iostream>\n\nint main() {\n    std::cout << \"Hello World!\";\n    return 0;\n}",
+                libs: [
+                    {n:"Boost", t:"Core", d:"Portable C++ libraries.", c:"apt install libboost-all-dev"},
+                    {n:"Qt", t:"GUI", d:"Widget toolkit.", c:"apt install qt5-default"},
+                    {n:"OpenCV", t:"Vision", d:"Computer Vision.", c:"vcpkg install opencv"},
+                    {n:"Unreal SDK", t:"Game", d:"Game Engine API.", c:"(Installer)"},
+                    {n:"OpenGL", t:"Gfx", d:"Graphics API.", c:"apt install libgl1-mesa-dev"},
+                    {n:"FFmpeg", t:"Media", d:"Audio/Video streaming.", c:"vcpkg install ffmpeg"},
+                    {n:"POCO", t:"Net", d:"Network libraries.", c:"vcpkg install poco"},
+                    {n:"Eigen", t:"Math", d:"Linear algebra.", c:"vcpkg install eigen3"},
+                    {n:"SDL", t:"Media", d:"DirectMedia Layer.", c:"apt install libsdl2-dev"},
+                    {n:"SFML", t:"Media", d:"Multimedia Library.", c:"apt install libsfml-dev"},
+                    {n:"Vulkan", t:"Gfx", d:"3D graphics API.", c:"apt install libvulkan-dev"},
+                    {n:"Google Test", t:"Test", d:"Testing Framework.", c:"vcpkg install gtest"},
+                    {n:"Dear ImGui", t:"UI", d:"Immediate Mode GUI.", c:"vcpkg install imgui"},
+                    {n:"TBB", t:"Thread", d:"Threading Blocks.", c:"vcpkg install tbb"},
+                    {n:"gRPC", t:"Net", d:"RPC framework.", c:"vcpkg install grpc"},
+                    {n:"Protobuf", t:"Data", d:"Protocol Buffers.", c:"vcpkg install protobuf"},
+                    {n:"ZeroMQ", t:"Msg", d:"Async messaging.", c:"vcpkg install zeromq"},
+                    {n:"Cinder", t:"Creative", d:"Creative coding.", c:"(git clone)"},
+                    {n:"Ogre", t:"3D", d:"Rendering Engine.", c:"apt install libogre-1.9-dev"},
+                    {n:"JSON", t:"Data", d:"JSON for C++.", c:"vcpkg install nlohmann-json"}
+                ]
+            },
+            go: {
+                name: "Go", creator: "Google", year: "2009", type: "Compiled",
+                desc: "Go is a statically typed, compiled language known for its simple syntax and concurrency.",
+                code: "package main\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"Hello, World!\")\n}",
+                libs: [
+                    {n:"Gin", t:"Web", d:"HTTP web framework.", c:"go get gin-gonic/gin"},
+                    {n:"GORM", t:"ORM", d:"ORM library.", c:"go get gorm.io/gorm"},
+                    {n:"Cobra", t:"CLI", d:"CLI applications.", c:"go get spf13/cobra"},
+                    {n:"Viper", t:"Config", d:"Go configuration.", c:"go get spf13/viper"},
+                    {n:"Echo", t:"Web", d:"Web framework.", c:"go get labstack/echo/v4"},
+                    {n:"Fiber", t:"Web", d:"Express inspired.", c:"go get gofiber/fiber/v2"},
+                    {n:"Zap", t:"Log", d:"Fast logging.", c:"go get uber.org/zap"},
+                    {n:"Colly", t:"Scrape", d:"Scraper Framework.", c:"go get gocolly/colly"},
+                    {n:"Go-kit", t:"Micro", d:"Microservices toolkit.", c:"go get go-kit/kit"},
+                    {n:"Docker SDK", t:"Cloud", d:"Docker Client.", c:"go get docker/client"},
+                    {n:"K8s Client", t:"Cloud", d:"Kubernetes client.", c:"go get k8s.io/client-go"},
+                    {n:"Chi", t:"Net", d:"Composable router.", c:"go get go-chi/chi"},
+                    {n:"Gorilla Mux", t:"Net", d:"URL router.", c:"go get gorilla/mux"},
+                    {n:"Logrus", t:"Log", d:"Structured logger.", c:"go get sirupsen/logrus"},
+                    {n:"Ent", t:"ORM", d:"Entity framework.", c:"go get entgo.io/ent"},
+                    {n:"Bubbletea", t:"TUI", d:"TUI framework.", c:"go get charmbracelet/bubbletea"},
+                    {n:"Hugo", t:"SSG", d:"Website framework.", c:"go install gohugoio/hugo"},
+                    {n:"Testify", t:"Test", d:"Assertions/mocks.", c:"go get stretchr/testify"},
+                    {n:"Sqlx", t:"DB", d:"Database extensions.", c:"go get jmoiron/sqlx"},
+                    {n:"Gunk", t:"Tool", d:"Frontend for Gmake.", c:"go install gunk/gunk"}
+                ]
+            }
         };
 
-        // --- RENDER LOGIC ---
+        // --- APP LOGIC ---
         const langList = document.getElementById('lang-list');
         const welcomeScreen = document.getElementById('welcome-screen');
         const detailView = document.getElementById('detail-view');
 
+        // Render Sidebar
         Object.keys(data).forEach(key => {
             const btn = document.createElement('button');
             btn.className = 'lang-btn';
-            btn.innerHTML = `<span>${data[key].name}</span> <span>›</span>`;
+            btn.innerHTML = `<i class="fa-solid fa-code"></i> ${data[key].name}`;
             btn.onclick = () => loadLanguage(key, btn);
             langList.appendChild(btn);
         });
@@ -231,32 +477,69 @@
         function loadLanguage(key, btn) {
             welcomeScreen.style.display = 'none';
             detailView.style.display = 'block';
+
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
             const info = data[key];
+            
+            // Populate Header & Meta
             document.getElementById('lang-title').innerText = info.name;
-            document.getElementById('about').innerHTML = `<p style="font-size:1.1rem; line-height:1.6;">${info.desc}</p>`;
+            document.getElementById('meta-creator').innerText = info.creator;
+            document.getElementById('meta-year').innerText = info.year;
+            document.getElementById('meta-type').innerText = info.type;
+            
+            // Populate Content
+            document.getElementById('desc-text').innerText = info.desc;
             document.getElementById('code-block').innerText = info.code;
 
-            const libList = document.getElementById('lib-list');
-            libList.innerHTML = '';
-            info.libs.forEach(lib => {
-                libList.innerHTML += `
-                    <div class="lib-card">
-                        <div class="lib-header"><span class="lib-name">${lib.n}</span><span class="lib-tag">${lib.t}</span></div>
-                        <div style="flex:1; margin-bottom:10px; color:#64748b; font-size:0.9rem;">${lib.d}</div>
-                        <div class="install-box">${lib.c}</div>
-                    </div>`;
+            // Populate Grid with Native Ad Injection
+            const libGrid = document.getElementById('lib-grid');
+            libGrid.innerHTML = '';
+
+            info.libs.forEach((lib, index) => {
+                // INJECT AD CARD at Position 5 (Index 4)
+                if (index === 4) {
+                    const adCard = document.createElement('div');
+                    adCard.className = 'ad-card';
+                    adCard.innerHTML = `
+                        <div class="ad-label">Sponsored</div>
+                        <ins class="adsbygoogle"
+                             style="display:block; width:100%; height:100%"
+                             data-ad-client="ca-pub-6787196977801417"
+                             data-ad-slot="9840451052"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                        <script>(adsbygoogle = window.adsbygoogle || []).push({});<\/script>
+                    `;
+                    libGrid.appendChild(adCard);
+                }
+
+                // Normal Card
+                const card = document.createElement('div');
+                card.className = 'lib-card';
+                card.innerHTML = `
+                    <div class="lib-head">
+                        <div class="lib-name">${lib.n}</div>
+                        <div class="lib-tag">${lib.t}</div>
+                    </div>
+                    <div class="lib-desc">${lib.d}</div>
+                    <div class="cmd-box">${lib.c}</div>
+                `;
+                libGrid.appendChild(card);
             });
+
             switchTab('about');
         }
 
-        function switchTab(tab) {
-            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
-            document.getElementById(tab).classList.add('active');
+        function switchTab(id) {
+            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+            
+            // Update Tab UI
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+            const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(id));
+            if(activeBtn) activeBtn.classList.add('active');
         }
     </script>
 </body>
