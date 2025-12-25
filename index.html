@@ -3,20 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevDocs Pro - Master Programming</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>DevDocs Pro - The Ultimate Coding Wiki</title>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6787196977801417"
+     crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
     <style>
-        /* --- 1. MODERN VARIABLES & RESET --- */
+        /* --- 1. VARIABLES & RESET --- */
         :root {
-            --primary: #3b82f6;
-            --sidebar-bg: #1e293b;
-            --sidebar-text: #e2e8f0;
+            --primary: #2563eb;       /* Royal Blue */
+            --primary-dark: #1e40af;
+            --secondary: #0f172a;     /* Dark Slate */
             --bg-color: #f8fafc;
-            --text-color: #334155;
-            --card-bg: #ffffff;
-            --code-bg: #1e1e1e;
-            --ad-border: #f59e0b; /* Yellow/Orange for Ads */
+            --sidebar-bg: #0f172a;
+            --text-main: #334155;
+            --text-light: #94a3b8;
+            --accent: #f59e0b;        /* Amber (Ads/Highlights) */
+            --code-bg: #1e293b;
+            --card-hover: translateY(-4px);
         }
+
+        * { box-sizing: border-box; }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -24,57 +33,40 @@
             display: flex;
             height: 100vh;
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-main);
             overflow: hidden;
         }
 
-        /* --- 2. ADVERTISING ZONES --- */
-        
-        /* Popup Modal */
+        /* --- 2. POPUP AD (VIGNETTE) --- */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.75);
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 2000;
+            z-index: 9999;
+            backdrop-filter: blur(4px);
         }
         .ad-modal {
             background: white;
-            width: 500px;
-            padding: 30px;
+            width: 600px;
             border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.4s ease-out;
         }
-        .ad-banner-top {
-            width: 100%;
-            height: 90px;
-            background-color: #fffbeb; /* Light yellow */
-            border: 2px dashed var(--ad-border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            color: #b45309;
-            font-weight: bold;
-            border-radius: 8px;
-        }
-        .ad-in-content {
-            margin: 20px 0;
-            padding: 20px;
-            background: #fff;
-            border: 1px solid #ddd;
-            border-left: 5px solid var(--ad-border);
-            text-align: center;
-        }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
+        .ad-header { background: #ef4444; color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 1.2rem; }
+        .ad-body { padding: 30px; text-align: center; }
+        .ad-placeholder { background: #f3f4f6; border: 2px dashed #d1d5db; color: #6b7280; padding: 40px; margin: 20px 0; font-weight: bold; border-radius: 8px; }
 
-        /* --- 3. SIDEBAR UI --- */
+        /* --- 3. SIDEBAR --- */
         .sidebar {
-            width: 260px;
+            width: 280px;
             background-color: var(--sidebar-bg);
-            color: var(--sidebar-text);
+            color: var(--text-light);
             display: flex;
             flex-direction: column;
             border-right: 1px solid #334155;
@@ -82,182 +74,135 @@
         }
 
         .brand {
-            padding: 25px;
+            padding: 30px;
             font-size: 1.5rem;
-            font-weight: 700;
+            font-weight: 800;
             color: white;
-            background: rgba(0,0,0,0.2);
-            letter-spacing: 1px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+            border-bottom: 1px solid #1e293b;
+            letter-spacing: -0.5px;
         }
+        .brand span { color: var(--primary); }
 
-        .lang-list {
-            flex: 1;
-            overflow-y: auto;
-            padding: 10px;
-        }
-
+        .lang-list { flex: 1; overflow-y: auto; padding: 15px; }
+        
         .lang-btn {
             width: 100%;
             background: transparent;
             border: none;
-            color: #94a3b8;
-            padding: 15px;
+            color: #cbd5e1;
+            padding: 14px 20px;
             text-align: left;
             font-size: 0.95rem;
             cursor: pointer;
-            border-radius: 6px;
+            border-radius: 8px;
             transition: all 0.2s;
             font-weight: 500;
-            margin-bottom: 4px;
-        }
-
-        .lang-btn:hover {
-            background-color: #334155;
-            color: white;
-        }
-
-        .lang-btn.active {
-            background-color: var(--primary);
-            color: white;
-            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.5);
-        }
-
-        .revenue-btn {
-            margin: 20px;
-            background-color: #10b981;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        /* --- 4. MAIN CONTENT AREA --- */
-        .main-content {
-            flex: 1;
-            padding: 40px 60px;
-            overflow-y: auto;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            color: #0f172a;
-        }
-
-        /* Tabs */
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #e2e8f0;
-        }
-
-        .tab-btn {
-            background: none;
-            border: none;
-            padding: 12px 25px;
-            font-size: 1rem;
-            color: #64748b;
-            cursor: pointer;
-            font-weight: 600;
-            border-bottom: 3px solid transparent;
-            transition: 0.3s;
-        }
-
-        .tab-btn:hover { color: var(--primary); }
-
-        .tab-btn.active {
-            border-bottom: 3px solid var(--primary);
-            color: var(--primary);
-        }
-
-        /* Sections */
-        .content-section {
-            display: none;
-            animation: fadeIn 0.4s ease;
-        }
-        .content-section.active { display: block; }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Styling the content */
-        .meta-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .meta-card {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .meta-card h4 { margin: 0 0 5px 0; color: #64748b; font-size: 0.85rem; text-transform: uppercase; }
-        .meta-card p { margin: 0; font-weight: 600; color: #0f172a; font-size: 1.1rem; }
-
-        .desc-text {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: #334155;
-            max-width: 800px;
-        }
-
-        /* Code Blocks */
-        pre {
-            background-color: var(--code-bg);
-            color: #f8f8f2;
-            padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-            font-family: 'Courier New', monospace;
-            border: 1px solid #333;
-        }
-
-        /* Library Cards */
-        .lib-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .lib-card {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 20px;
-            transition: transform 0.2s;
-        }
-
-        .lib-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            border-color: var(--primary);
-        }
-
-        .lib-name { font-weight: bold; font-size: 1.1rem; color: #0f172a; }
-        .lib-desc { color: #64748b; font-size: 0.9rem; margin: 8px 0 15px 0; }
-        
-        .install-box {
-            background: #f1f5f9;
-            padding: 8px 12px;
-            border-radius: 4px;
-            font-family: monospace;
-            font-size: 0.85rem;
-            color: #334155;
+            margin-bottom: 5px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+        .lang-btn:hover { background-color: #1e293b; color: white; padding-left: 25px; }
+        .lang-btn.active { background-color: var(--primary); color: white; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4); }
 
-        .copy-icon { cursor: pointer; color: var(--primary); font-weight: bold; }
+        .sidebar-footer { padding: 20px; border-top: 1px solid #1e293b; }
+        .revenue-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- 4. MAIN AREA --- */
+        .main-content {
+            flex: 1;
+            padding: 40px 60px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        /* Top Banner Ad */
+        .ad-banner-top {
+            width: 100%;
+            height: 100px;
+            background-color: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            color: #6b7280;
+            font-size: 0.85rem;
+        }
+
+        /* --- WELCOME HERO SECTION (NEW) --- */
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            border: 1px solid #e2e8f0;
+        }
+        .hero h1 { font-size: 2.5rem; color: #0f172a; margin-bottom: 15px; letter-spacing: -1px; }
+        .hero p { font-size: 1.1rem; color: #64748b; max-width: 600px; margin: 0 auto 30px auto; line-height: 1.6; }
+        
+        .hero-stats { display: flex; justify-content: center; gap: 30px; margin-top: 30px; }
+        .stat-card { background: #f8fafc; padding: 20px; border-radius: 10px; min-width: 150px; border: 1px solid #e2e8f0; }
+        .stat-num { display: block; font-size: 2rem; font-weight: 800; color: var(--primary); }
+        .stat-label { font-size: 0.9rem; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- CONTENT VIEWS --- */
+        .tabs { display: flex; gap: 20px; margin-bottom: 30px; border-bottom: 2px solid #e2e8f0; }
+        .tab-btn {
+            background: none; border: none; padding: 15px 5px; font-size: 1rem; color: #64748b; cursor: pointer; font-weight: 600;
+            position: relative; transition: 0.3s;
+        }
+        .tab-btn:hover { color: var(--primary); }
+        .tab-btn.active { color: var(--primary); }
+        .tab-btn.active::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 3px; background: var(--primary); border-radius: 3px; }
+
+        .content-section { display: none; animation: fadeIn 0.4s ease; }
+        .content-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Meta Cards */
+        .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .meta-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; }
+        .meta-card h4 { margin: 0 0 5px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; }
+        .meta-card p { margin: 0; font-weight: 700; color: #0f172a; font-size: 1.1rem; }
+
+        /* Library Grid */
+        .lib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .lib-card {
+            background: white; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px;
+            transition: all 0.2s; display: flex; flex-direction: column;
+        }
+        .lib-card:hover { transform: var(--card-hover); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); border-color: var(--primary); }
+        
+        .lib-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .lib-name { font-weight: 800; font-size: 1.1rem; color: #0f172a; }
+        .lib-tag { background: #eff6ff; color: var(--primary); padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
+        .lib-desc { color: #64748b; font-size: 0.9rem; margin-bottom: 15px; flex-grow: 1; line-height: 1.5; }
+        
+        .install-box {
+            background: #0f172a; padding: 10px; border-radius: 6px; font-family: 'Courier New', monospace; font-size: 0.8rem; color: #22d3ee;
+            display: flex; align-items: center; gap: 8px; white-space: nowrap; overflow-x: auto;
+        }
+        .install-box::before { content: '$'; color: #64748b; }
+
+        /* In-Content Ad */
+        .ad-in-content { margin: 30px 0; padding: 20px; background: white; border: 1px solid #e2e8f0; border-left: 5px solid var(--accent); text-align: center; border-radius: 8px; }
+
+        pre { background: var(--code-bg); color: #e2e8f0; padding: 25px; border-radius: 12px; overflow-x: auto; border: 1px solid #334155; }
 
     </style>
 </head>
@@ -265,97 +210,139 @@
 
     <div id="ad-popup" class="modal-overlay">
         <div class="ad-modal">
-            <h2 style="color: #ef4444;">Limited Time Offer!</h2>
-            <p><strong>Unlock the Full Stack Developer Bundle</strong></p>
-            <p>Master Python, JS, and React in 30 days.</p>
-            <div style="background:#fef3c7; padding:30px; margin:20px 0; border:2px dashed #d97706; font-weight:bold;">
-                [ GOOGLE AD / SPONSOR SPACE ]
+            <div class="ad-header">📢 DevDocs Pro Exclusive</div>
+            <div class="ad-body">
+                <h3>Master Full-Stack Development</h3>
+                <p>Join 50,000+ developers upgrading their careers today.</p>
+                <div class="ad-placeholder">[ GOOGLE VIGNETTE AD SLOT ]</div>
+                <button onclick="closeAd()" style="background:#f1f5f9; color:#334155; border:none; padding:12px 24px; border-radius:6px; cursor:pointer; font-weight:bold;">Continue to Site</button>
             </div>
-            <button onclick="closeAd()" style="background:#334155; color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer;">
-                No Thanks, Continue to Documentation
-            </button>
         </div>
     </div>
 
     <nav class="sidebar">
-        <div class="brand">DevDocs Pro</div>
+        <div class="brand">DevDocs<span>Pro</span></div>
         <div class="lang-list" id="lang-list">
             </div>
-        <button class="revenue-btn" onclick="alert('Viewing Market Cap & Salary Data...')">
-            💰 View Salary Data
-        </button>
+        <div class="sidebar-footer">
+            <button class="revenue-btn" onclick="alert('Accessing Market Data API...')">💰 Global Salary Data</button>
+        </div>
     </nav>
 
     <main class="main-content">
         
-        <div class="ad-banner-top">
-            [ TOP BANNER ADVERTISEMENT SPACE - 728x90 ]
+        <div class="ad-banner-top">[ GOOGLE LEADERBOARD AD (728x90) ]</div>
+
+        <div id="welcome-screen">
+            <div class="hero">
+                <h1>The Developer's Knowledge Base</h1>
+                <p>Select a technology from the sidebar to access instant documentation, syntax guides, and the top 20 libraries used by industry professionals.</p>
+                
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <span class="stat-num">6</span>
+                        <span class="stat-label">Languages</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-num">120+</span>
+                        <span class="stat-label">Libraries</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-num">Free</span>
+                        <span class="stat-label">Forever</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <h1 id="lang-title">Welcome</h1>
-        
-        <div class="tabs" id="tabs-container" style="display:none;">
-            <button class="tab-btn active" onclick="switchTab('about')">About</button>
-            <button class="tab-btn" onclick="switchTab('syntax')">Syntax</button>
-            <button class="tab-btn" onclick="switchTab('packages')">Packages & Install</button>
-        </div>
-
-        <div id="about" class="content-section">
-            <p class="desc-text">Please select a language from the sidebar to view its documentation, libraries, and installation commands.</p>
-        </div>
-
-        <div id="syntax" class="content-section">
-            <h3>Basic Syntax & Structure</h3>
-            <p>Below is a standard entry-point example:</p>
-            <pre id="code-block">Loading...</pre>
-        </div>
-
-        <div id="packages" class="content-section">
+        <div id="detail-view" style="display:none;">
+            <h1 id="lang-title" style="font-size: 2.5rem; color:#0f172a; margin-bottom:10px;">Language</h1>
             
-            <div class="ad-in-content">
-                <strong>Sponsored:</strong> Cloud Hosting for your Apps starting at $2.99/mo.
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('about')">Overview</button>
+                <button class="tab-btn" onclick="switchTab('syntax')">Syntax</button>
+                <button class="tab-btn" onclick="switchTab('packages')">Top 20 Libraries</button>
             </div>
 
-            <h3>Popular Libraries & Installation</h3>
-            <p>Essential tools for this ecosystem:</p>
-            <div class="lib-grid" id="lib-list">
+            <div id="about" class="content-section">
                 </div>
+
+            <div id="syntax" class="content-section">
+                <h3>Entry Point</h3>
+                <pre id="code-block">Loading...</pre>
+            </div>
+
+            <div id="packages" class="content-section">
+                <div class="ad-in-content"><strong>Sponsored:</strong> [ GOOGLE IN-ARTICLE AD SLOT ]</div>
+                <div class="lib-grid" id="lib-list"></div>
+            </div>
         </div>
+
     </main>
 
     <script>
-        function closeAd() {
-            document.getElementById('ad-popup').style.display = 'none';
-        }
+        function closeAd() { document.getElementById('ad-popup').style.display = 'none'; }
 
-        // --- ENRICHED DATA SOURCE ---
+        /* --- DATA SOURCE: 20 LIBRARIES PER LANGUAGE --- */
         const data = {
             python: {
                 name: "Python",
                 creator: "Guido van Rossum",
                 year: "1991",
-                publisher: "Python Software Foundation",
-                desc: "Python is an interpreted, high-level, general-purpose programming language. Its design philosophy emphasizes code readability with the use of significant indentation. It is widely used in Data Science, AI, and Web Development.",
-                code: "# Python 3 Example\ndef main():\n    print('Hello, World!')\n\n# Variables\nname = 'Alice'\nage = 30\n\nif __name__ == '__main__':\n    main()",
+                publisher: "PSF",
+                desc: "Python is a high-level, general-purpose programming language. Its design philosophy emphasizes code readability with the use of significant indentation.",
+                code: "def main():\n    print('Hello World')\n\nif __name__ == '__main__':\n    main()",
                 libs: [
-                    { name: "NumPy", desc: "Fundamental package for scientific computing with Python.", cmd: "pip install numpy" },
-                    { name: "Pandas", desc: "Data analysis and manipulation tool.", cmd: "pip install pandas" },
-                    { name: "Django", desc: "High-level Python Web framework.", cmd: "pip install django" },
-                    { name: "Requests", desc: "Elegant and simple HTTP library for Python.", cmd: "pip install requests" }
+                    {n:"NumPy", t:"Data", d:"Fundamental package for scientific computing.", c:"pip install numpy"},
+                    {n:"Pandas", t:"Data", d:"Data analysis and manipulation tool.", c:"pip install pandas"},
+                    {n:"Django", t:"Web", d:"High-level web framework for rapid design.", c:"pip install django"},
+                    {n:"Flask", t:"Web", d:"Lightweight WSGI web application framework.", c:"pip install flask"},
+                    {n:"FastAPI", t:"API", d:"Modern, fast (high-performance) web framework.", c:"pip install fastapi"},
+                    {n:"TensorFlow", t:"AI", d:"End-to-end open source machine learning platform.", c:"pip install tensorflow"},
+                    {n:"PyTorch", t:"AI", d:"Deep learning tensor library.", c:"pip install torch"},
+                    {n:"Keras", t:"AI", d:"Deep learning API running on top of TensorFlow.", c:"pip install keras"},
+                    {n:"Scikit-learn", t:"ML", d:"Simple and efficient tools for data analysis.", c:"pip install scikit-learn"},
+                    {n:"Matplotlib", t:"Viz", d:"Comprehensive library for creating static visualizations.", c:"pip install matplotlib"},
+                    {n:"Seaborn", t:"Viz", d:"Statistical data visualization based on matplotlib.", c:"pip install seaborn"},
+                    {n:"Requests", t:"Http", d:"Elegant and simple HTTP library.", c:"pip install requests"},
+                    {n:"BeautifulSoup", t:"Scrape", d:"Library for pulling data out of HTML and XML.", c:"pip install beautifulsoup4"},
+                    {n:"Scrapy", t:"Scrape", d:"Fast high-level web crawling framework.", c:"pip install scrapy"},
+                    {n:"SQLAlchemy", t:"DB", d:"SQL Toolkit and Object Relational Mapper.", c:"pip install sqlalchemy"},
+                    {n:"Celery", t:"Task", d:"Distributed task queue.", c:"pip install celery"},
+                    {n:"PyGame", t:"Game", d:"Set of Python modules designed for writing games.", c:"pip install pygame"},
+                    {n:"Pillow", t:"Image", d:"Python Imaging Library (Fork).", c:"pip install Pillow"},
+                    {n:"Pytest", t:"Test", d:"Framework that makes building simple tests easy.", c:"pip install pytest"},
+                    {n:"Black", t:"Tool", d:"The uncompromising code formatter.", c:"pip install black"}
                 ]
             },
             javascript: {
                 name: "JavaScript",
                 creator: "Brendan Eich",
                 year: "1995",
-                publisher: "Open Standard",
-                desc: "JavaScript (JS) is a lightweight, interpreted, or just-in-time compiled programming language with first-class functions. It is the core language of the Web.",
-                code: "// ES6 Example\nconst main = () => {\n  console.log('Hello, World!');\n};\n\nlet user = 'Alice';\n\nmain();",
+                publisher: "ECMA",
+                desc: "JavaScript is the programming language of the Web. It is lightweight, interpreted, and supports object-oriented, imperative, and declarative styles.",
+                code: "console.log('Hello World');\n\nconst greet = (name) => {\n  return `Hi ${name}`;\n}",
                 libs: [
-                    { name: "React", desc: "Library for building user interfaces.", cmd: "npm install react" },
-                    { name: "Express", desc: "Fast, unopinionated, minimalist web framework for Node.js.", cmd: "npm install express" },
-                    { name: "Axios", desc: "Promise based HTTP client for the browser and node.js.", cmd: "npm install axios" },
-                    { name: "Lodash", desc: "A modern JavaScript utility library.", cmd: "npm install lodash" }
+                    {n:"React", t:"UI", d:"Library for building user interfaces.", c:"npm install react"},
+                    {n:"Next.js", t:"Fullstack", d:"The React Framework for the Web.", c:"npx create-next-app"},
+                    {n:"Vue.js", t:"UI", d:"The Progressive JavaScript Framework.", c:"npm install vue"},
+                    {n:"Angular", t:"UI", d:"Platform for building mobile and desktop web apps.", c:"npm install @angular/core"},
+                    {n:"Svelte", t:"UI", d:"Cybernetically enhanced web apps.", c:"npm install svelte"},
+                    {n:"Express", t:"Backend", d:"Fast, unopinionated, minimalist web framework.", c:"npm install express"},
+                    {n:"Node.js", t:"Runtime", d:"JavaScript runtime built on Chrome's V8 engine.", c:"nvm install node"},
+                    {n:"Lodash", t:"Util", d:"A modern JavaScript utility library.", c:"npm install lodash"},
+                    {n:"Axios", t:"Http", d:"Promise based HTTP client.", c:"npm install axios"},
+                    {n:"Moment.js", t:"Date", d:"Parse, validate, manipulate, and display dates.", c:"npm install moment"},
+                    {n:"Three.js", t:"3D", d:"JavaScript 3D library.", c:"npm install three"},
+                    {n:"D3.js", t:"Viz", d:"Data-Driven Documents.", c:"npm install d3"},
+                    {n:"Socket.io", t:"Realtime", d:"Bidirectional and low-latency communication.", c:"npm install socket.io"},
+                    {n:"Redux", t:"State", d:"Predictable state container for apps.", c:"npm install redux"},
+                    {n:"Tailwind", t:"CSS", d:"Utility-first CSS framework.", c:"npm install tailwindcss"},
+                    {n:"TypeScript", t:"Lang", d:"JavaScript with syntax for types.", c:"npm install typescript"},
+                    {n:"Jest", t:"Test", d:"Delightful JavaScript Testing.", c:"npm install jest"},
+                    {n:"Cypress", t:"Test", d:"Fast, easy and reliable testing for anything that runs in a browser.", c:"npm install cypress"},
+                    {n:"Puppeteer", t:"Scrape", d:"Headless Chrome Node.js API.", c:"npm install puppeteer"},
+                    {n:"Webpack", t:"Build", d:"Bundler for modules.", c:"npm install webpack"}
                 ]
             },
             java: {
@@ -363,13 +350,29 @@
                 creator: "James Gosling",
                 year: "1995",
                 publisher: "Oracle",
-                desc: "Java is a class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible. 'Write once, run anywhere'.",
-                code: "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello World\");\n    }\n}",
+                desc: "Java is a class-based, object-oriented programming language designed to have as few implementation dependencies as possible.",
+                code: "public class Main {\n  public static void main(String[] args) {\n    System.out.println(\"Hello World\");\n  }\n}",
                 libs: [
-                    { name: "Spring Boot", desc: "Create stand-alone, production-grade Spring Applications.", cmd: "./mvnw install spring-boot-starter" },
-                    { name: "Jackson", desc: "JSON parser for Java.", cmd: "mvn install jackson-databind" },
-                    { name: "JUnit", desc: "Programmer-oriented testing framework.", cmd: "mvn install junit" },
-                    { name: "Log4j", desc: "Logging utility.", cmd: "mvn install log4j" }
+                    {n:"Spring Boot", t:"Framework", d:"Stand-alone Spring applications.", c:"gradle bootRun"},
+                    {n:"Hibernate", t:"ORM", d:"Object/Relational Mapping solution.", c:"mvn install hibernate-core"},
+                    {n:"Apache Kafka", t:"Data", d:"Distributed event streaming platform.", c:"mvn install kafka-clients"},
+                    {n:"JUnit", t:"Test", d:"Unit testing framework.", c:"mvn install junit"},
+                    {n:"Log4j2", t:"Log", d:"Logging library.", c:"mvn install log4j-core"},
+                    {n:"Jackson", t:"JSON", d:"JSON parser for Java.", c:"mvn install jackson-databind"},
+                    {n:"Mockito", t:"Test", d:"Mocking framework for unit tests.", c:"mvn install mockito-core"},
+                    {n:"Selenium", t:"Auto", d:"Browser automation.", c:"mvn install selenium-java"},
+                    {n:"Lombok", t:"Util", d:"Spicing up your java.", c:"mvn install lombok"},
+                    {n:"Guava", t:"Util", d:"Google core libraries for Java.", c:"mvn install guava"},
+                    {n:"Apache Commons", t:"Util", d:"Reusable Java components.", c:"mvn install commons-lang3"},
+                    {n:"RxJava", t:"Async", d:"Reactive Extensions for the JVM.", c:"mvn install rxjava"},
+                    {n:"Netty", t:"Net", d:"Asynchronous event-driven network application framework.", c:"mvn install netty-all"},
+                    {n:"Thymeleaf", t:"Template", d:"Server-side Java template engine.", c:"mvn install thymeleaf"},
+                    {n:"Quartz", t:"Job", d:"Job scheduling library.", c:"mvn install quartz"},
+                    {n:"Gson", t:"JSON", d:"Serialization/deserialization library.", c:"mvn install gson"},
+                    {n:"H2 Database", t:"DB", d:"Fast in-memory SQL database.", c:"mvn install h2"},
+                    {n:"Maven", t:"Build", d:"Build automation tool.", c:"apt install maven"},
+                    {n:"Gradle", t:"Build", d:"Build automation evolved.", c:"apt install gradle"},
+                    {n:"Jakarta EE", t:"Ent", d:"Cloud-native enterprise Java.", c:"mvn install jakarta.jakartaee-api"}
                 ]
             },
             cpp: {
@@ -377,26 +380,59 @@
                 creator: "Bjarne Stroustrup",
                 year: "1985",
                 publisher: "ISO",
-                desc: "C++ is a general-purpose programming language created as an extension of the C programming language. It is used in OS development, Games (Unreal Engine), and High-performance apps.",
-                code: "#include <iostream>\n\nint main() {\n    std::cout << \"Hello World!\";\n    return 0;\n}",
+                desc: "C++ is a cross-platform language that can be used to create high-performance applications.",
+                code: "#include <iostream>\nint main() {\n  std::cout << \"Hello World\";\n  return 0;\n}",
                 libs: [
-                    { name: "Boost", desc: "Peer-reviewed portable C++ source libraries.", cmd: "sudo apt-get install libboost-all-dev" },
-                    { name: "OpenCV", desc: "Real-time computer vision library.", cmd: "vcpkg install opencv" },
-                    { name: "Qt", desc: "Widget toolkit for creating graphical user interfaces.", cmd: "apt-get install qt5-default" },
-                    { name: "POCO", desc: "Network-centric, portable C++ libraries.", cmd: "vcpkg install poco" }
+                    {n:"Boost", t:"Core", d:"Portable C++ source libraries.", c:"apt install libboost-all-dev"},
+                    {n:"Qt", t:"GUI", d:"Widget toolkit for creating GUIs.", c:"apt install qt5-default"},
+                    {n:"OpenCV", t:"Vision", d:"Computer vision library.", c:"vcpkg install opencv"},
+                    {n:"POCO", t:"Net", d:"Network-centric C++ libraries.", c:"vcpkg install poco"},
+                    {n:"FFmpeg", t:"Media", d:"Record, convert and stream audio/video.", c:"vcpkg install ffmpeg"},
+                    {n:"SDL", t:"Media", d:"Simple DirectMedia Layer.", c:"apt install libsdl2-dev"},
+                    {n:"SFML", t:"Media", d:"Simple and Fast Multimedia Library.", c:"apt install libsfml-dev"},
+                    {n:"OpenGL", t:"Gfx", d:"Rendering 2D and 3D vector graphics.", c:"apt install libgl1-mesa-dev"},
+                    {n:"Vulkan", t:"Gfx", d:"Low-overhead, cross-platform 3D graphics API.", c:"apt install libvulkan-dev"},
+                    {n:"Dear ImGui", t:"UI", d:"Bloat-free Immediate Mode GUI.", c:"vcpkg install imgui"},
+                    {n:"Google Test", t:"Test", d:"C++ testing framework.", c:"vcpkg install gtest"},
+                    {n:"Protobuf", t:"Data", d:"Protocol Buffers.", c:"vcpkg install protobuf"},
+                    {n:"gRPC", t:"Net", d:"High performance RPC framework.", c:"vcpkg install grpc"},
+                    {n:"ZeroMQ", t:"Net", d:"High-performance asynchronous messaging.", c:"vcpkg install zeromq"},
+                    {n:"Eigen", t:"Math", d:"Template library for linear algebra.", c:"vcpkg install eigen3"},
+                    {n:"TBB", t:"Thread", d:"Threading Building Blocks.", c:"vcpkg install tbb"},
+                    {n:"Cinder", t:"Creative", d:"Community-developed library for creative coding.", c:"(git clone)"},
+                    {n:"Ogre", t:"3D", d:"Object-Oriented Graphics Rendering Engine.", c:"apt install libogre-1.9-dev"},
+                    {n:"JSON", t:"Data", d:"JSON for Modern C++.", c:"vcpkg install nlohmann-json"},
+                    {n:"spdlog", t:"Log", d:"Fast C++ logging library.", c:"vcpkg install spdlog"}
                 ]
             },
             go: {
                 name: "Go (Golang)",
-                creator: "Google Engineers",
+                creator: "Google",
                 year: "2009",
                 publisher: "Google",
-                desc: "Go is a statically typed, compiled programming language designed at Google. It makes it easy to build simple, reliable, and efficient software.",
-                code: "package main\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"Hello, World!\")\n}",
+                desc: "Go is a statically typed, compiled programming language designed at Google. It is known for its simplicity and efficiency.",
+                code: "package main\nimport \"fmt\"\nfunc main() {\n  fmt.Println(\"Hello World\")\n}",
                 libs: [
-                    { name: "Gin", desc: "HTTP web framework written in Go (Golang).", cmd: "go get -u github.com/gin-gonic/gin" },
-                    { name: "GORM", desc: "The fantastic ORM library for Golang.", cmd: "go get -u gorm.io/gorm" },
-                    { name: "Viper", desc: "Go configuration with fangs.", cmd: "go get github.com/spf13/viper" }
+                    {n:"Gin", t:"Web", d:"HTTP web framework.", c:"go get github.com/gin-gonic/gin"},
+                    {n:"GORM", t:"ORM", d:"The fantastic ORM library for Golang.", c:"go get gorm.io/gorm"},
+                    {n:"Cobra", t:"CLI", d:"Library for modern CLI applications.", c:"go get github.com/spf13/cobra"},
+                    {n:"Viper", t:"Config", d:"Go configuration with fangs.", c:"go get github.com/spf13/viper"},
+                    {n:"Echo", t:"Web", d:"High performance, extensible, minimalist web framework.", c:"go get github.com/labstack/echo/v4"},
+                    {n:"Fiber", t:"Web", d:"Express inspired web framework.", c:"go get github.com/gofiber/fiber/v2"},
+                    {n:"Zap", t:"Log", d:"Blazing fast, structured logging.", c:"go get go.uber.org/zap"},
+                    {n:"Logrus", t:"Log", d:"Structured logger for Go.", c:"go get github.com/sirupsen/logrus"},
+                    {n:"Colly", t:"Scrape", d:"Elegant Scraper and Crawler Framework.", c:"go get github.com/gocolly/colly"},
+                    {n:"Go-kit", t:"Micro", d:"Programming toolkit for microservices.", c:"go get github.com/go-kit/kit"},
+                    {n:"Docker SDK", t:"DevOps", d:"Client for Docker Engine.", c:"go get github.com/docker/docker/client"},
+                    {n:"K8s Client", t:"Cloud", d:"Kubernetes client.", c:"go get k8s.io/client-go"},
+                    {n:"Gorilla Mux", t:"Net", d:"Powerful URL router and dispatcher.", c:"go get github.com/gorilla/mux"},
+                    {n:"Chi", t:"Net", d:"Lightweight, idiomatic and composable router.", c:"go get github.com/go-chi/chi"},
+                    {n:"Gunk", t:"Tool", d:"Modern frontend for Gmake.", c:"go install github.com/gunk/gunk"},
+                    {n:"Bubbletea", t:"TUI", d:"Powerful little TUI framework.", c:"go get github.com/charmbracelet/bubbletea"},
+                    {n:"Hugo", t:"SSG", d:"Fastest framework for building websites.", c:"go install github.com/gohugoio/hugo"},
+                    {n:"Sqlx", t:"DB", d:"General purpose extensions to database/sql.", c:"go get github.com/jmoiron/sqlx"},
+                    {n:"Testify", t:"Test", d:"Toolkit with common assertions and mocks.", c:"go get github.com/stretchr/testify"},
+                    {n:"Ent", t:"ORM", d:"An entity framework for Go.", c:"go get entgo.io/ent"}
                 ]
             },
             php: {
@@ -405,91 +441,95 @@
                 year: "1994",
                 publisher: "Zend",
                 desc: "PHP is a popular general-purpose scripting language that is especially suited to web development.",
-                code: "<?php\n  $txt = \"Hello world!\";\n  echo $txt;\n?>",
+                code: "<?php\n  echo \"Hello World\";\n?>",
                 libs: [
-                    { name: "Laravel", desc: "The PHP Framework for Web Artisans.", cmd: "composer create-project laravel/laravel" },
-                    { name: "Guzzle", desc: "PHP HTTP client.", cmd: "composer require guzzlehttp/guzzle" },
-                    { name: "PHPUnit", desc: "Programmer-oriented testing framework.", cmd: "composer require --dev phpunit/phpunit" }
+                    {n:"Laravel", t:"Fw", d:"The PHP Framework for Web Artisans.", c:"composer create-project laravel/laravel"},
+                    {n:"Symfony", t:"Fw", d:"Set of reusable PHP components.", c:"composer create-project symfony/skeleton"},
+                    {n:"CodeIgniter", t:"Fw", d:"Powerful PHP framework with a very small footprint.", c:"composer create-project codeigniter4/appstarter"},
+                    {n:"CakePHP", t:"Fw", d:"Rapid development framework for PHP.", c:"composer create-project --prefer-dist cakephp/app"},
+                    {n:"Guzzle", t:"Http", d:"PHP HTTP client.", c:"composer require guzzlehttp/guzzle"},
+                    {n:"PHPUnit", t:"Test", d:"Programmer-oriented testing framework.", c:"composer require --dev phpunit/phpunit"},
+                    {n:"Composer", t:"Tool", d:"Dependency Manager for PHP.", c:"apt install composer"},
+                    {n:"Monolog", t:"Log", d:"Sends your logs to files, sockets, etc.", c:"composer require monolog/monolog"},
+                    {n:"Twig", t:"Tpl", d:"Flexible, fast, and secure template engine.", c:"composer require twig/twig"},
+                    {n:"Faker", t:"Data", d:"Generates fake data for you.", c:"composer require fakerphp/faker"},
+                    {n:"Carbon", t:"Date", d:"A simple PHP API extension for DateTime.", c:"composer require nesbot/carbon"},
+                    {n:"Doctrine", t:"ORM", d:"Object Relational Mapper.", c:"composer require doctrine/orm"},
+                    {n:"Slim", t:"Fw", d:"PHP micro framework.", c:"composer require slim/slim"},
+                    {n:"Phalcon", t:"Fw", d:"Web framework implemented as a C extension.", c:"apt install php-phalcon"},
+                    {n:"Swoole", t:"Async", d:"Event-driven asynchronous & concurrent networking engine.", c:"pecl install swoole"},
+                    {n:"ReactPHP", t:"Async", d:"Event-driven, non-blocking I/O.", c:"composer require react/react"},
+                    {n:"Ratchet", t:"Socket", d:"WebSockets for PHP.", c:"composer require cboden/ratchet"},
+                    {n:"PHPMailer", t:"Mail", d:"The classic email sending library.", c:"composer require phpmailer/phpmailer"},
+                    {n:"Flysystem", t:"File", d:"File storage abstraction for PHP.", c:"composer require league/flysystem"},
+                    {n:"Mockery", t:"Test", d:"Mock object framework.", c:"composer require --dev mockery/mockery"}
                 ]
             }
         };
 
-        // --- APP LOGIC ---
-        const langListEl = document.getElementById('lang-list');
-        const titleEl = document.getElementById('lang-title');
-        const tabsContainer = document.getElementById('tabs-container');
-        
-        // Render Sidebar
+        const langList = document.getElementById('lang-list');
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const detailView = document.getElementById('detail-view');
+
+        // Initialize Sidebar
         Object.keys(data).forEach(key => {
             const btn = document.createElement('button');
             btn.className = 'lang-btn';
-            btn.innerText = data[key].name;
+            btn.innerHTML = `<span>${data[key].name}</span> <i class="fas fa-chevron-right" style="font-size:0.7rem;"></i>`;
             btn.onclick = () => loadLanguage(key, btn);
-            langListEl.appendChild(btn);
+            langList.appendChild(btn);
         });
 
-        function loadLanguage(key, clickedBtn) {
-            const info = data[key];
+        function loadLanguage(key, btn) {
+            // UI Toggle
+            welcomeScreen.style.display = 'none';
+            detailView.style.display = 'block';
 
-            // 1. Highlight Sidebar
+            // Active State
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            clickedBtn.classList.add('active');
+            btn.classList.add('active');
 
-            // 2. Show Tabs
-            tabsContainer.style.display = 'flex';
-            titleEl.innerText = info.name;
+            const info = data[key];
+            document.getElementById('lang-title').innerText = info.name;
 
-            // 3. Populate "About" with nice Meta Cards
+            // Render About
             document.getElementById('about').innerHTML = `
                 <div class="meta-grid">
-                    <div class="meta-card">
-                        <h4>Creator</h4>
-                        <p>${info.creator}</p>
-                    </div>
-                    <div class="meta-card">
-                        <h4>Year</h4>
-                        <p>${info.year}</p>
-                    </div>
-                    <div class="meta-card">
-                        <h4>Organization</h4>
-                        <p>${info.publisher}</p>
-                    </div>
+                    <div class="meta-card"><h4>Creator</h4><p>${info.creator}</p></div>
+                    <div class="meta-card"><h4>Year</h4><p>${info.year}</p></div>
+                    <div class="meta-card"><h4>Publisher</h4><p>${info.publisher}</p></div>
                 </div>
-                <p class="desc-text">${info.desc}</p>
+                <p style="font-size:1.1rem; line-height:1.7; color:#475569;">${info.desc}</p>
             `;
 
-            // 4. Populate Syntax
+            // Render Code
             document.getElementById('code-block').innerText = info.code;
 
-            // 5. Populate Libraries (NEW CARD DESIGN + ADS)
+            // Render 20 Libraries
             const libList = document.getElementById('lib-list');
-            libList.innerHTML = ''; // Clear old
-
+            libList.innerHTML = '';
             info.libs.forEach(lib => {
-                const card = document.createElement('div');
-                card.className = 'lib-card';
-                card.innerHTML = `
-                    <div class="lib-name">${lib.name}</div>
-                    <div class="lib-desc">${lib.desc}</div>
-                    <div class="install-box">
-                        <span>> ${lib.cmd}</span>
+                libList.innerHTML += `
+                    <div class="lib-card">
+                        <div class="lib-header">
+                            <span class="lib-name">${lib.n}</span>
+                            <span class="lib-tag">${lib.t}</span>
+                        </div>
+                        <div class="lib-desc">${lib.d}</div>
+                        <div class="install-box">${lib.c}</div>
                     </div>
                 `;
-                libList.appendChild(card);
             });
 
-            // Switch to first tab
             switchTab('about');
         }
 
-        function switchTab(tabName) {
-            document.querySelectorAll('.content-section').forEach(div => div.classList.remove('active'));
-            document.getElementById(tabName).classList.add('active');
-
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabName));
-            if(activeBtn) activeBtn.classList.add('active');
+        function switchTab(tab) {
+            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            event.currentTarget.classList.add('active');
         }
     </script>
 </body>
-            </html>
+                    </html>
