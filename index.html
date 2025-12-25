@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodePedia - Programming Languages</title>
+    <style>
+        /* CSS - Styling the website */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        /* --- AD MODAL (POPUP) STYLES --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Ensures it sits on top of everything */
+        }
+
+        .ad-box {
+            background-color: white;
+            width: 400px;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .ad-box h2 { color: #e74c3c; margin-top: 0; }
+        .ad-box p { color: #555; }
+        
+        .ad-close-btn {
+            background-color: #34495e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 1rem;
+        }
+
+        .ad-close-btn:hover { background-color: #2c3e50; }
+
+        /* Left Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+
+        .sidebar h2 {
+            margin-top: 0;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #34495e;
+            padding-bottom: 10px;
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            color: #bdc3c7;
+            padding: 15px;
+            text-align: left;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+
+        .lang-btn:hover, .lang-btn.active {
+            background-color: #34495e;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* "Revenue" / Stats Button */
+        .revenue-btn {
+            margin-top: auto; 
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        /* Navigation Tabs */
+        .tabs {
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: 0.3s;
+        }
+
+        .tab-btn:hover { color: #2980b9; }
+
+        .tab-btn.active {
+            border-bottom: 3px solid #2980b9;
+            color: #2980b9;
+            font-weight: bold;
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none; 
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .content-section.active { display: block; }
+
+        h1 { margin-top: 0; color: #2c3e50; }
+        
+        .meta-data {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        code {
+            background-color: #2d3436;
+            color: #fab1a0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        pre {
+            background-color: #2d3436;
+            color: #dfe6e9;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        ul { line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+    <div id="ad-popup" class="modal-overlay">
+        <div class="ad-box">
+            <h2>Special Offer!</h2>
+            <p><strong>Learn to Code Pro Today!</strong></p>
+            <p>Get 50% off on all Premium Documentation subscriptions.</p>
+            <div style="background:#eee; padding:20px; margin:10px 0; border:1px dashed #999;">
+                [ THIS IS YOUR AD SPACE ]
+            </div>
+            <button class="ad-close-btn" onclick="closeAd()">Close & Continue to Site</button>
+        </div>
+    </div>
+
+    <nav class="sidebar">
+        <h2>Select Language</h2>
+        <div id="lang-list"></div>
+        <button class="revenue-btn" onclick="alert('Revenue/Stats Feature Coming Soon!')">Market Data ($)</button>
+    </nav>
+
+    <main class="main-content">
+        <h1 id="lang-title">Welcome</h1>
+        
+        <div class="tabs" id="tabs-container" style="display:none;">
+            <button class="tab-btn active" onclick="switchTab('about')">About</button>
+            <button class="tab-btn" onclick="switchTab('syntax')">Syntax & Examples</button>
+            <button class="tab-btn" onclick="switchTab('packages')">Packages & Libraries</button>
+        </div>
+
+        <div id="about" class="content-section">
+            <p>Select a language from the left menu to view details.</p>
+        </div>
+
+        <div id="syntax" class="content-section">
+            <h3>Basic Syntax</h3>
+            <p>How to write a basic "Hello World":</p>
+            <pre id="code-block">Loading...</pre>
+        </div>
+
+        <div id="packages" class="content-section">
+            <h3>Popular Libraries</h3>
+            <ul id="lib-list"></ul>
+        </div>
+    </main>
+
+    <script>
+        // --- AD LOGIC ---
+        // This runs automatically because the HTML elements are there by default
+        function closeAd() {
+            document.getElementById('ad-popup').style.display = 'none';
+        }
+
+        // --- DATA SOURCE (Updated with more languages) ---
+        const data = {
+            python: {
+                name: "Python",
+                creator: "Guido van Rossum",
+                year: "1991",
+                publisher: "Python Software Foundation",
+                desc: "Python is a high-level, general-purpose programming language. Its design philosophy emphasizes code readability.",
+                code: "print('Hello, World!')\n\n# Variables\nx = 5\ny = 'John'",
+                libs: ["NumPy (Math)", "Pandas (Data)", "Django (Web)", "TensorFlow (AI)"]
+            },
+            javascript: {
+                name: "JavaScript",
+                creator: "Brendan Eich",
+                year: "1995",
+                publisher: "Netscape",
+                desc: "JavaScript (JS) is a lightweight, interpreted language mostly used for web pages.",
+                code: "console.log('Hello, World!');\n\nlet x = 5;",
+                libs: ["React (UI)", "Node.js (Server)", "Vue.js (UI)", "Lodash"]
+            },
+            java: {
+                name: "Java",
+                creator: "James Gosling",
+                year: "1995",
+                publisher: "Oracle",
+                desc: "Java is a high-level, class-based, object-oriented programming language.",
+                code: "public class Main {\n  public static void main(String[] args) {\n    System.out.println(\"Hello World\");\n  }\n}",
+                libs: ["Spring Boot", "Hibernate", "Apache Maven", "JUnit"]
+            },
+            cpp: {
+                name: "C++",
+                creator: "Bjarne Stroustrup",
+                year: "1985",
+                publisher: "Bell Labs",
+                desc: "C++ is a cross-platform language used to create high-performance applications.",
+                code: "#include <iostream>\nusing namespace std;\n\nint main() {\n  cout << \"Hello World!\";\n  return 0;\n}",
+                libs: ["Boost", "Qt", "STL", "OpenCV"]
+            },
+            csharp: {
+                name: "C#",
+                creator: "Anders Hejlsberg",
+                year: "2000",
+                publisher: "Microsoft",
+                desc: "C# is a modern, object-oriented language widely used for enterprise software and Unity game dev.",
+                code: "using System;\nclass P {\n static void Main() { Console.WriteLine(\"Hello!\"); }\n}",
+                libs: [".NET Core", "Entity Framework", "Unity", "Xamarin"]
+            },
+            go: {
+                name: "Go",
+                creator: "Robert Griesemer, Rob Pike, Ken Thompson",
+                year: "2009",
+                publisher: "Google",
+                desc: "Go is a statically typed, compiled language known for simplicity and concurrency.",
+                code: "package main\nimport \"fmt\"\nfunc main() { fmt.Println(\"Hi!\") }",
+                libs: ["Gin", "GORM", "Cobra", "Docker"]
+            },
+            swift: {
+                name: "Swift",
+                creator: "Chris Lattner",
+                year: "2014",
+                publisher: "Apple",
+                desc: "Swift is a powerful language for iOS, macOS, tvOS, and watchOS.",
+                code: "import Swift\nprint(\"Hello, World!\")",
+                libs: ["SwiftUI", "Cocoa Touch", "Alamofire", "Vapor"]
+            },
+            php: {
+                name: "PHP",
+                creator: "Rasmus Lerdorf",
+                year: "1994",
+                publisher: "Zend",
+                desc: "PHP is a popular general-purpose scripting language for web development.",
+                code: "<?php echo \"Hello!\"; ?>",
+                libs: ["Laravel", "Symfony", "WordPress", "Composer"]
+            }
+        };
+
+        // --- MAIN APP LOGIC ---
+
+        const langListEl = document.getElementById('lang-list');
+        const titleEl = document.getElementById('lang-title');
+        const tabsContainer = document.getElementById('tabs-container');
+        
+        // Render Sidebar Buttons
+        Object.keys(data).forEach(key => {
+            const btn = document.createElement('button');
+            btn.className = 'lang-btn';
+            btn.innerText = data[key].name;
+            btn.onclick = () => loadLanguage(key, btn);
+            langListEl.appendChild(btn);
+        });
+
+        // Function to load language data
+        function loadLanguage(key, clickedBtn) {
+            const info = data[key];
+
+            // Update Active Sidebar Button
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            clickedBtn.classList.add('active');
+
+            // Show Tabs
+            tabsContainer.style.display = 'block';
+
+            // Set Title
+            titleEl.innerText = info.name;
+
+            // Populate "About" Section
+            document.getElementById('about').innerHTML = `
+                <div class="meta-data">
+                    <p><strong>Created By:</strong> ${info.creator}</p>
+                    <p><strong>Year:</strong> ${info.year}</p>
+                    <p><strong>Publisher/Org:</strong> ${info.publisher}</p>
+                </div>
+                <p>${info.desc}</p>
+                <br>
+                <button class="revenue-btn" onclick="switchTab('syntax')">Go to Syntax Examples &rarr;</button>
+            `;
+
+            // Populate "Syntax" Section
+            document.getElementById('code-block').innerText = info.code;
+
+            // Populate "Packages" Section
+            const libList = document.getElementById('lib-list');
+            libList.innerHTML = '';
+            info.libs.forEach(lib => {
+                const li = document.createElement('li');
+                li.innerText = lib;
+                libList.appendChild(li);
+            });
+
+            // Reset view to 'About' tab
+            switchTab('about');
+        }
+
+        // Function to switch tabs
+        function switchTab(tabName) {
+            document.querySelectorAll('.content-section').forEach(div => div.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabName));
+            if(activeBtn) activeBtn.classList.add('active');
+        }
+    </script>
+</body>
+  </html>
